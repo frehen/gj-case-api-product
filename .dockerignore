@@ -1,0 +1,13 @@
+# Ignore Maven and IDE files
+*.iml
+.idea/
+*.log
+
+# Ignore .git directory
+.git/
+
+# Ignore OS files
+.DS_Store
+
+# Ignore source files
+src/

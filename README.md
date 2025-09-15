@@ -23,6 +23,26 @@ API documentation is available at http://localhost:8080/swagger-ui/index.html
 
 The H2-database is available at http://localhost:8080/h2-console/
 
+## Docker support
+
+To build a docker image, run (from the project root):
+
+```
+docker build -t api-product .
+```
+
+To run the docker image, run:
+
+```
+docker run --name api-product -p 8080:8080 -d api-product
+```
+
+To remove running image, run:
+
+```
+docker rm -f api-product 
+```
+
 ## Request examples
 
 Get all products:
