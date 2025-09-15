@@ -34,7 +34,7 @@ curl -X GET http://localhost:8080/products/ | jq
 Get a product by id (4 in this case):
 
 ```
-curl -X GET http://localhost:8080/products/ | jq
+curl -X GET http://localhost:8080/products/4 | jq
 ```
 
 Create a new product (id is generated automatically and returned in the response):
