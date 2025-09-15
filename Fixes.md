@@ -42,3 +42,22 @@ it is important to check that these match. If there is a mismatch the REST opera
 should return bad-request (400 status code).
 
 Added controller advice to handle InvalidArgumentExceptions.
+
+## Fix 4: Financal report, Wrong request path
+
+I assume that the financial report should be available at `/report/financial`
+
+There is currently an error in the controller mapping:
+
+```
+    @GetMapping(name = "/financial")
+    public FinancialReport getFinancialReport(){
+```
+
+Should be:
+
+```
+    @GetMapping(value = "/financial")
+                ----- 
+    public FinancialReport getFinancialReport(){
+```

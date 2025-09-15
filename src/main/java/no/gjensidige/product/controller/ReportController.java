@@ -23,7 +23,7 @@ public class ReportController {
      *
      * @return
      */
-    @GetMapping(name = "/financial")
+    @GetMapping(value = "/financial")
     public FinancialReport getFinancialReport(){
 
         throw new UnsupportedOperationException();
