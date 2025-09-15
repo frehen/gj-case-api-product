@@ -61,3 +61,10 @@ Should be:
                 ----- 
     public FinancialReport getFinancialReport(){
 ```
+
+## Fix 5: Implement the Financal report
+
+Added implementation of controller with test.
+
+Added initial dummy implementation of ReportService with dummy test.
+
