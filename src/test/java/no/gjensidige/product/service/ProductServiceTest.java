@@ -4,8 +4,8 @@ import no.gjensidige.product.dto.ProductDTO;
 import no.gjensidige.product.entity.Product;
 import no.gjensidige.product.exception.ProductNotFoundException;
 import no.gjensidige.product.repository.ProductRepository;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -14,8 +14,8 @@ import org.modelmapper.ModelMapper;
 import java.math.BigInteger;
 import java.util.*;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,7 +33,7 @@ public class ProductServiceTest {
     @Mock
     ModelMapper modelMapper;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
@@ -105,7 +105,7 @@ public class ProductServiceTest {
         assertEquals(p,product);
     }
 
-    @Test( expected = ProductNotFoundException.class)
+    @Test
     public void updateProductWithProductNotFoundException() {
         Long productId = 1L;
         ProductDTO inputProduct = createProductDTO(productId);
@@ -114,16 +114,20 @@ public class ProductServiceTest {
         when(modelMapper.map(inputProduct, Product.class)).thenReturn(p);
         when(productRepository.findById(productId)).thenReturn(Optional.empty());
 
-        productService.updateProduct(productId, inputProduct);
+        assertThrows(ProductNotFoundException.class, () -> {
+            productService.updateProduct(productId, inputProduct);
+        });
     }
 
-    @Test( expected = IllegalArgumentException.class)
+    @Test
     public void updateProductWithIllegalArgumentException() {
         Long productId = 1L;
         Long invalidProductId = 2L;
         ProductDTO inputProduct = createProductDTO(invalidProductId);
 
-        productService.updateProduct(productId, inputProduct);
+        assertThrows(IllegalArgumentException.class, () -> {
+            productService.updateProduct(productId, inputProduct);
+        });
     }
 
     private static ProductDTO createProductDTO(Long id) {
@@ -153,16 +157,16 @@ public class ProductServiceTest {
     }
 
 
-    @Test(expected = ProductNotFoundException.class)
+    @Test
     public void deleteProductWithException() {
         Optional<Product> op = Optional.empty();
 
         when(productRepository.findById(anyLong())).thenReturn(op);
 
-        Product product = productService.deleteProduct(10l);
-
+        assertThrows(ProductNotFoundException.class, () -> {
+            productService.deleteProduct(10l);
+        });
         verify(productRepository).findById(10l);
-        fail("Didn't throw not found exception");
     }
 
     @Test
