@@ -19,7 +19,7 @@ To test the project, run:
 mvn clean test
 ```
 
-API documentation is available at http://localhost:8080/swagger-ui.html
+API documentation is available at http://localhost:8080/swagger-ui/index.html
 
 The H2-database is available at http://localhost:8080/h2-console/
 
