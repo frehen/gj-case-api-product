@@ -24,6 +24,14 @@ public class FinancialReport {
         return highestMarginProduct;
     }
 
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
+    }
+
     public void setHighestMarginProduct(Product highestMarginProduct) {
         this.highestMarginProduct = highestMarginProduct;
     }
