@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * ProductService
@@ -52,14 +53,17 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    //@Todo create update functionality
     public Product updateProduct(Long id, ProductDTO inputProduct) {
-
-
-
-        throw new UnsupportedOperationException();
+        if (!Objects.equals(id, inputProduct.getId())) {
+            throw new IllegalArgumentException(String.format(
+                    "Product id in request path: %s does not match id in the request body: %s",
+                    id, inputProduct.getId()));
+        }
+        Product p = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        modelMapper.map(inputProduct, p);
+        productRepository.save(p);
+        return p;
     }
-
 
     public ProductDTO convertToDTO(Product product) {
 
