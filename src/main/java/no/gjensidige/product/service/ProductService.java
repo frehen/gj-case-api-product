@@ -38,12 +38,9 @@ public class ProductService {
 
     }
 
-    //@Todo create delete functionality
     public Product deleteProduct(Long id) {
-
-        Product p  = new Product();
-
-
+        Product p = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        productRepository.delete(p);
         return p;
     }
 

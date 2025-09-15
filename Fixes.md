@@ -25,5 +25,8 @@ This error causes the Swagger UI to present an incorrect model for the body:
   "unitPrice": 0
 }
 ```
+## Fix 2: Failing tests
 
+Tests `ProductControllerTest` and `ProductControllerTest` are failing. 
 
+Fix this by implementing the DELETE method in the ProductController.java:
