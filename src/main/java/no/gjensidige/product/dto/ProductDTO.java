@@ -69,7 +69,7 @@ public class ProductDTO {
         return numberSold;
     }
 
-    public void setNumbersold(BigInteger numberSold) {
+    public void setNumberSold(BigInteger numberSold) {
         this.numberSold = numberSold;
     }
 }

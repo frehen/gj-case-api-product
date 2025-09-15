@@ -5,9 +5,7 @@ import no.gjensidige.product.entity.Product;
 import no.gjensidige.product.exception.ProductNotFoundException;
 import no.gjensidige.product.repository.ProductRepository;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -121,7 +119,7 @@ public class ProductServiceTest {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setCategory("Hardware");
         productDTO.setProductName("Seagate Baracuda 500GB");
-        productDTO.setNumbersold(BigInteger.valueOf(200));
+        productDTO.setNumberSold(BigInteger.valueOf(200));
         productDTO.setPrice(55.50);
 
         when(modelMapper.map(productDTO,Product.class)).thenReturn(mm.map(productDTO,Product.class));
