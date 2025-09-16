@@ -107,3 +107,9 @@ There are no REST integration tests for the controllers.
 
 Added REST integration tests for the controllers.
 
+## Fix 10: Added integration tests for Product repository
+
+There are no integration tests for the Product repository.
+
+Added DataJpaTests for the Product repository.
+
