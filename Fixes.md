@@ -123,3 +123,11 @@ layers. Therefore, a few tests that test the whole application together can be u
 
 Added full application integration tests for generating the financial report and verifying 
 that Open API doc is available when the application is running.
+
+## Fix 12: ProductControllerTest uses wrong class when testing response
+
+When I wrote the tests for the ProductController, I used the wrong class for the response. I used
+the ProductDTO class instead of the Product class. The two classes contains the same fields, but is
+it the Product class that is returned by the controller.
+
+Fixed the tests to use the correct class.

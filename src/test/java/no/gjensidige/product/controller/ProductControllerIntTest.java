@@ -64,7 +64,7 @@ public class ProductControllerIntTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
 
-        List<ProductDTO> products = objectMapper.readValue(
+        List<Product> products = objectMapper.readValue(
                 response.getContentAsString(),
                 new TypeReference<>() {
                 }
@@ -85,9 +85,9 @@ public class ProductControllerIntTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
 
-        ProductDTO product = objectMapper.readValue(
+        Product product = objectMapper.readValue(
                 response.getContentAsString(),
-                ProductDTO.class
+                Product.class
         );
 
         assertEquals(product);
@@ -121,9 +121,9 @@ public class ProductControllerIntTest {
                 .andExpect(status().isOk()) // Should be isCreated()?
                 .andReturn().getResponse();
 
-        ProductDTO returnedProduct = objectMapper.readValue(
+        Product returnedProduct = objectMapper.readValue(
                 response.getContentAsString(),
-                ProductDTO.class
+                Product.class
         );
 
         assertEquals(returnedProduct);
@@ -144,9 +144,9 @@ public class ProductControllerIntTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
 
-        ProductDTO returnedProduct = objectMapper.readValue(
+        Product returnedProduct = objectMapper.readValue(
                 response.getContentAsString(),
-                ProductDTO.class
+                Product.class
         );
 
         assertEquals(returnedProduct);
@@ -199,9 +199,9 @@ public class ProductControllerIntTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
 
-        ProductDTO returnedProduct = objectMapper.readValue(
+        Product returnedProduct = objectMapper.readValue(
                 response.getContentAsString(),
-                ProductDTO.class
+                Product.class
         );
 
         assertEquals(returnedProduct);
@@ -221,7 +221,7 @@ public class ProductControllerIntTest {
         assertThat(response.getContentAsString()).isEqualTo("Could not find product with id : 1");
     }
 
-    private static void assertEquals(ProductDTO returnedProduct) {
+    private static void assertEquals(Product returnedProduct) {
         assertThat(returnedProduct.getId()).isEqualTo(1L);
         assertThat(returnedProduct.getProductName()).isEqualTo("Product 1");
         assertThat(returnedProduct.getCategory()).isEqualTo("Category 1");
