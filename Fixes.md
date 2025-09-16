@@ -107,9 +107,19 @@ There are no REST integration tests for the controllers.
 
 Added REST integration tests for the controllers.
 
-## Fix 10: Added integration tests for Product repository
+## Fix 10: Added integration tests for the Product repository
 
 There are no integration tests for the Product repository.
 
 Added DataJpaTests for the Product repository.
 
+## Fix 11: Added Full Application Integration Tests
+
+There are no integration tests that test all the application layers together.
+
+While testing of the individual layers is good and should cover the majority of the functionality, 
+subtle errors can still occur due to misconfiguration or errors in the interaction between the 
+layers. Therefore, a few tests that test the whole application together can be useful.
+
+Added full application integration tests for generating the financial report and verifying 
+that Open API doc is available when the application is running.
