@@ -37,13 +37,13 @@ The PUT method in ProductController.java is not implemented.
 
 Implement method and add tests.
 
-Since both the request path and the request body contain the id of the product
-it is important to check that these match. If there is a mismatch the REST operation
+Since both the request path and the request body contain the id of the product,
+it is important to check that these match. If there is a mismatch, the REST operation
 should return bad-request (400 status code).
 
 Added controller advice to handle InvalidArgumentExceptions.
 
-## Fix 4: Financal report, Wrong request path
+## Fix 4: Financial report, Wrong request path
 
 I assume that the financial report should be available at `/report/financial`
 
@@ -62,7 +62,7 @@ Should be:
     public FinancialReport getFinancialReport(){
 ```
 
-## Fix 5: Implement the Financal report
+## Fix 5: Implement the Financial report
 
 Added implementation of controller with test.
 
@@ -101,4 +101,9 @@ This fix removes the `price` field from the Swagger model.
 
 I also updated the example request for POST and PUT in the `README.md` file to not use the `price` field.
 
+## Fix 9: Added integration tests for controllers
+
+There are no REST integration tests for the controllers.
+
+Added REST integration tests for the controllers.
 
