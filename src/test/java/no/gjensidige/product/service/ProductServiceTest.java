@@ -144,7 +144,6 @@ public class ProductServiceTest {
         inputProduct.setCategory("Helseforsikring");
         inputProduct.setProductName("Helse1");
         inputProduct.setUnitPrice(100.00);
-        inputProduct.setNumberSold(BigInteger.valueOf(10));
         inputProduct.setImageLink("static.gjensidige.com/");
         inputProduct.setUnitCost(100.00);
         inputProduct.setNumberSold(BigInteger.valueOf(20));
