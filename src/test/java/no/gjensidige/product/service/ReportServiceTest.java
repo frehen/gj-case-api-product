@@ -3,12 +3,12 @@ package no.gjensidige.product.service;
 import no.gjensidige.product.entity.Product;
 import no.gjensidige.product.model.FinancialReport;
 import no.gjensidige.product.repository.ProductRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.modelmapper.ModelMapper;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -20,17 +20,22 @@ import static org.mockito.Mockito.when;
 
 public class ReportServiceTest {
 
-    public ModelMapper mm = new ModelMapper();
-
     @InjectMocks
     ReportService reportService;
 
     @Mock
     ProductRepository productRepository;
 
+    private AutoCloseable closeable;
+
     @BeforeEach
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+    void init() {
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void releaseMocks() throws Exception {
+        closeable.close();
     }
 
     @Test

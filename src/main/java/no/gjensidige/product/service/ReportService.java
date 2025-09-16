@@ -3,7 +3,6 @@ package no.gjensidige.product.service;
 import no.gjensidige.product.entity.Product;
 import no.gjensidige.product.model.FinancialReport;
 import no.gjensidige.product.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,10 +11,19 @@ import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * ReportService
+ *
+ * <p>Class responsible for producing reports based on product data
+ *
+ */
 @Service
 public class ReportService {
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ReportService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public FinancialReport getFinancialReport() {
         List<Product> products = productRepository.findAll();

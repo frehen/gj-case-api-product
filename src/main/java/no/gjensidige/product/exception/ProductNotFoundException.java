@@ -2,7 +2,7 @@ package no.gjensidige.product.exception;
 
 /**
  *
- * Exception thrown when product is not in the database.
+ * Exception thrown when the product is not in the database.
  *
  */
 public class ProductNotFoundException  extends RuntimeException {

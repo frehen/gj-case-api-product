@@ -95,5 +95,5 @@ curl -X DELETE "http://localhost:8080/products/4"
 Get financial report:
 
 ```
-curl -X GET "http://localhost:8080/reports/financial"
+curl -X GET "http://localhost:8080/reports/financial" | jq
 ```

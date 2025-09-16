@@ -4,6 +4,7 @@ import no.gjensidige.product.dto.ProductDTO;
 import no.gjensidige.product.entity.Product;
 import no.gjensidige.product.exception.ProductNotFoundException;
 import no.gjensidige.product.repository.ProductRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -33,9 +34,16 @@ public class ProductServiceTest {
     @Mock
     ModelMapper modelMapper;
 
+    private AutoCloseable closeable;
+
     @BeforeEach
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+    void init() {
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void releaseMocks() throws Exception {
+        closeable.close();
     }
 
     @Test
@@ -70,7 +78,7 @@ public class ProductServiceTest {
 
         when(productRepository.findById(anyLong())).thenReturn(op);
 
-        Product product = productService.getProduct(1l);
+        Product product = productService.getProduct(1L);
 
         assertEquals(p,product);
     }
@@ -150,7 +158,7 @@ public class ProductServiceTest {
         Optional<Product> op = Optional.of(p);
         when(productRepository.findById(anyLong())).thenReturn(op);
 
-        Product product = productService.deleteProduct(1l);
+        Product product = productService.deleteProduct(1L);
         verify(productRepository).delete(p);
 
         assertEquals(p,product);
@@ -164,38 +172,54 @@ public class ProductServiceTest {
         when(productRepository.findById(anyLong())).thenReturn(op);
 
         assertThrows(ProductNotFoundException.class, () -> {
-            productService.deleteProduct(10l);
+            productService.deleteProduct(10L);
         });
-        verify(productRepository).findById(10l);
+        verify(productRepository).findById(10L);
     }
 
     @Test
     public void convertToDTO() {
         Product product = new Product();
+        product.setId(1L);
         product.setCategory("Hardware");
         product.setProductName("Seagate Baracuda 500GB");
-        product.setNumberSold(BigInteger.valueOf(200));
+        product.setNumberSold(new BigInteger("1000000000000"));
         product.setUnitPrice(55.50);
+        product.setImageLink("static.gjensidige.com/");
+        product.setUnitCost(10.00);
 
         when(modelMapper.map(product, ProductDTO.class)).thenReturn(mm.map(product,ProductDTO.class));
+
         ProductDTO productDTO = productService.convertToDTO(product);
+
+        assertEquals(product.getId(), productDTO.getId());
+        assertEquals(product.getCategory(), productDTO.getCategory());
+        assertEquals(product.getProductName(),productDTO.getProductName());
+        assertEquals(product.getNumberSold(), productDTO.getNumberSold());
+        assertEquals(product.getUnitPrice(), productDTO.getUnitPrice());
+        assertEquals(product.getImageLink(), productDTO.getImageLink());
+        assertEquals(product.getUnitCost(), productDTO.getUnitCost());
     }
 
     @Test
     public void convertToEntity() {
-
         ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(1L);
         productDTO.setCategory("Hardware");
         productDTO.setProductName("Seagate Baracuda 500GB");
-        productDTO.setNumberSold(BigInteger.valueOf(200));
+        productDTO.setNumberSold(new BigInteger("1000000000000"));
         productDTO.setUnitPrice(55.50);
+        productDTO.setImageLink("static.gjensidige.com/");
+        productDTO.setUnitCost(10.00);
 
         when(modelMapper.map(productDTO,Product.class)).thenReturn(mm.map(productDTO,Product.class));
+
         Product product = productService.convertToEntity(productDTO);
 
-        assertEquals(product.getProductName(),productDTO.getProductName());
-        assertEquals(product.getNumberSold(),productDTO.getNumberSold());
-        assertEquals(product.getCategory(),productDTO.getCategory());
+        assertEquals(productDTO.getCategory(),product.getCategory());
+        assertEquals(productDTO.getProductName(),product.getProductName());
+        assertEquals(productDTO.getNumberSold(),product.getNumberSold());
+        assertEquals(productDTO.getUnitPrice(),product.getUnitPrice());
 
     }
 }

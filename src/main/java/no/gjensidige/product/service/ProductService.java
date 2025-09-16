@@ -1,11 +1,10 @@
 package no.gjensidige.product.service;
 
 import no.gjensidige.product.dto.ProductDTO;
-import no.gjensidige.product.exception.ProductNotFoundException;
 import no.gjensidige.product.entity.Product;
+import no.gjensidige.product.exception.ProductNotFoundException;
 import no.gjensidige.product.repository.ProductRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,19 +13,20 @@ import java.util.Objects;
 /**
  * ProductService
  *
- * Class responsible of data manipulation between dto and entity
- *
+ * <p>Class responsible for data manipulation between dto and entity
  *
  */
-
 @Service
 public class ProductService {
 
-    @Autowired
-    ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public ProductService(ProductRepository productRepository, ModelMapper modelMapper) {
+        this.productRepository = productRepository;
+        this.modelMapper = modelMapper;
+    }
 
     public List<Product> getAllProducts() {
 
@@ -67,15 +67,12 @@ public class ProductService {
 
     public ProductDTO convertToDTO(Product product) {
 
-        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-
-        return productDTO;
+        return modelMapper.map(product, ProductDTO.class);
     }
 
     public Product convertToEntity(ProductDTO productDTO) {
-        Product product = modelMapper.map(productDTO, Product.class);
 
-        return product;
+        return modelMapper.map(productDTO, Product.class);
 
     }
 

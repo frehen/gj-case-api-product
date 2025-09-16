@@ -3,6 +3,7 @@ package no.gjensidige.product.controller;
 import no.gjensidige.product.dto.ProductDTO;
 import no.gjensidige.product.entity.Product;
 import no.gjensidige.product.service.ProductService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 public class ProductControllerTest {
     public ModelMapper mm = new ModelMapper();
 
@@ -28,9 +28,16 @@ public class ProductControllerTest {
     @Mock
     private ProductService productService;
 
+    private AutoCloseable closeable;
+
     @BeforeEach
-    public void init() {
-        MockitoAnnotations.initMocks(this);
+    void init() {
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void releaseMocks() throws Exception {
+        closeable.close();
     }
 
     @Test
@@ -58,21 +65,21 @@ public class ProductControllerTest {
     @Test
     public void getProduct() {
         Product p = new Product();
-        p.setId(1l);
+        p.setId(1L);
 
-        when(productService.getProduct(1l)).thenReturn(p);
+        when(productService.getProduct(1L)).thenReturn(p);
 
-        Product product = productController.getProduct(1l);
+        Product product = productController.getProduct(1L);
 
-        verify(productService).getProduct(1l);
-        assertEquals(1l, product.getId().longValue());
+        verify(productService).getProduct(1L);
+        assertEquals(1L, product.getId().longValue());
     }
 
     @Test
     public void createProduct() {
         ProductDTO inputProduct = createProductDTO(null);
         Product p = mm.map(inputProduct,Product.class);
-        p.setId(1L); // Id is set by the repository, not from the ProductDTO
+        p.setId(1L); // The id is set by the repository, not from the ProductDTO
 
         when(productService.createProduct(inputProduct)).thenReturn(p);
 
@@ -109,15 +116,15 @@ public class ProductControllerTest {
     public void deleteProduct() {
 
         Product p = new Product();
-        p.setId(1l);
+        p.setId(1L);
 
-        when(productService.deleteProduct(1l)).thenReturn(p);
+        when(productService.deleteProduct(1L)).thenReturn(p);
 
-        Product product = productController.deleteProduct(1l);
+        Product product = productController.deleteProduct(1L);
 
-        verify(productService).deleteProduct(1l);
+        verify(productService).deleteProduct(1L);
 
-        assertEquals(1l, product.getId().longValue());
+        assertEquals(1L, product.getId().longValue());
 
     }
 }

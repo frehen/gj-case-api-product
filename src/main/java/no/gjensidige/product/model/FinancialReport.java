@@ -6,10 +6,9 @@ import java.sql.Timestamp;
 /**
  *  FinancialReport
  *
- *  The model we would like to fill with data in exercise 2
+ *  <p>The model we would like to fill with data in exercise 2
  *
  */
-
 public class FinancialReport {
 
     Timestamp created;

@@ -7,9 +7,8 @@ import java.math.BigInteger;
 /**
  *  Product entity class.
  *
- *  This class is used for storing Products to the database.
+ *  <p>This class is used for storing the Products to the database.
  */
-
 @Entity
 @Table(name="product")
 public class Product {
@@ -29,8 +28,8 @@ public class Product {
         return productName;
     }
 
-    public void setProductName(String productname) {
-        this.productName = productname;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public Double getUnitPrice() {
