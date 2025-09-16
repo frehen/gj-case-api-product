@@ -28,6 +28,7 @@ The H2-database is available at http://localhost:8080/h2-console/
 To build a docker image, run (from the project root):
 
 ```
+mvn clean package
 docker build -t api-product .
 ```
 
@@ -37,7 +38,7 @@ To run the docker image, run:
 docker run --name api-product -p 8080:8080 -d api-product
 ```
 
-To remove running image, run:
+To remove the running image, run:
 
 ```
 docker rm -f api-product 
