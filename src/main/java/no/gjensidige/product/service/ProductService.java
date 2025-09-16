@@ -54,11 +54,6 @@ public class ProductService {
     }
 
     public Product updateProduct(Long id, ProductDTO inputProduct) {
-        if (!Objects.equals(id, inputProduct.getId())) {
-            throw new IllegalArgumentException(String.format(
-                    "Product id in request path: %s does not match id in the request body: %s",
-                    id, inputProduct.getId()));
-        }
         Product p = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         modelMapper.map(inputProduct, p);
         productRepository.save(p);

@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -85,7 +86,7 @@ public class ProductServiceTest {
 
     @Test
     public void createProduct() {
-        ProductDTO inputProduct = createProductDTO(null);
+        ProductDTO inputProduct = createProductDTO();
         Product p = mm.map(inputProduct,Product.class);
         p.setId(99L);
 
@@ -101,8 +102,9 @@ public class ProductServiceTest {
     @Test
     public void updateProduct() {
         Long productId = 1L;
-        ProductDTO inputProduct = createProductDTO(productId);
+        ProductDTO inputProduct = createProductDTO();
         Product p = mm.map(inputProduct,Product.class);
+        p.setId(productId);
 
         when(modelMapper.map(inputProduct, Product.class)).thenReturn(p);
         when(productRepository.findById(productId)).thenReturn(Optional.of(p));
@@ -116,8 +118,9 @@ public class ProductServiceTest {
     @Test
     public void updateProductWithProductNotFoundException() {
         Long productId = 1L;
-        ProductDTO inputProduct = createProductDTO(productId);
+        ProductDTO inputProduct = createProductDTO();
         Product p = mm.map(inputProduct,Product.class);
+        p.setId(productId);
 
         when(modelMapper.map(inputProduct, Product.class)).thenReturn(p);
         when(productRepository.findById(productId)).thenReturn(Optional.empty());
@@ -127,20 +130,8 @@ public class ProductServiceTest {
         });
     }
 
-    @Test
-    public void updateProductWithIllegalArgumentException() {
-        Long productId = 1L;
-        Long invalidProductId = 2L;
-        ProductDTO inputProduct = createProductDTO(invalidProductId);
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            productService.updateProduct(productId, inputProduct);
-        });
-    }
-
-    private static ProductDTO createProductDTO(Long id) {
+    private static ProductDTO createProductDTO() {
         ProductDTO inputProduct = new ProductDTO();
-        inputProduct.setId(id);
         inputProduct.setCategory("Helseforsikring");
         inputProduct.setProductName("Helse1");
         inputProduct.setUnitPrice(100.00);
@@ -191,7 +182,6 @@ public class ProductServiceTest {
 
         ProductDTO productDTO = productService.convertToDTO(product);
 
-        assertEquals(product.getId(), productDTO.getId());
         assertEquals(product.getCategory(), productDTO.getCategory());
         assertEquals(product.getProductName(),productDTO.getProductName());
         assertEquals(product.getNumberSold(), productDTO.getNumberSold());
@@ -203,7 +193,6 @@ public class ProductServiceTest {
     @Test
     public void convertToEntity() {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setId(1L);
         productDTO.setCategory("Hardware");
         productDTO.setProductName("Seagate Baracuda 500GB");
         productDTO.setNumberSold(new BigInteger("1000000000000"));
@@ -219,6 +208,8 @@ public class ProductServiceTest {
         assertEquals(productDTO.getProductName(),product.getProductName());
         assertEquals(productDTO.getNumberSold(),product.getNumberSold());
         assertEquals(productDTO.getUnitPrice(),product.getUnitPrice());
-
+        assertEquals(productDTO.getImageLink(),product.getImageLink());
+        assertEquals(productDTO.getUnitCost(),product.getUnitCost());
+        assertNull(product.getId());
     }
 }

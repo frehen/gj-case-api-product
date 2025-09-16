@@ -77,7 +77,6 @@ Update a product (id must be present in the request path):
 ```
 curl -X PUT "http://localhost:8080/products/4" -H "Content-Type: application/json" \
 -d '{
-  "id": 4,
   "category": "HelseforsikringNy",
   "imageLink": "static.gjensidige.com/",
   "numberSold": 5001,

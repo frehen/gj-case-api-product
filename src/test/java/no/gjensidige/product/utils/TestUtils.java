@@ -8,13 +8,11 @@ import java.math.BigInteger;
 public class TestUtils {
     @SuppressWarnings("SameParameterValue")
     public static ProductDTO createProductDTO(
-            Long id,
             String productName,
             Double unitCost,
             Double unitPrice,
             BigInteger numberSold) {
         ProductDTO p = new ProductDTO();
-        p.setId(id);
         p.setProductName(productName);
         p.setCategory("Category 1");
         p.setImageLink("static.gjensidige.com/");

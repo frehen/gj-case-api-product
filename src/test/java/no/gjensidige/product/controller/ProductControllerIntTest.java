@@ -109,10 +109,10 @@ public class ProductControllerIntTest {
 
     @Test
     public void createProduct() throws Exception {
-        ProductDTO inputProduct = TestUtils.createProductDTO(null, "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
+        ProductDTO inputProduct = TestUtils.createProductDTO( "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
         Product product = TestUtils.createProduct(1L, "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
 
-        when(productService.createProduct(any())).thenReturn(product);
+        when(productService.createProduct(any(ProductDTO.class))).thenReturn(product);
 
         MockHttpServletResponse response = mockMvc.perform(post("/products/")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -131,11 +131,11 @@ public class ProductControllerIntTest {
 
     @Test
     public void updateProduct() throws Exception {
-        ProductDTO inputProduct = TestUtils.createProductDTO(null, "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
+        ProductDTO inputProduct = TestUtils.createProductDTO("Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
 
         Product product = TestUtils.createProduct(1L, "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
 
-        when(productService.updateProduct(eq(1L), any())).thenReturn(product);
+        when(productService.updateProduct(eq(1L), any(ProductDTO.class))).thenReturn(product);
 
         MockHttpServletResponse response = mockMvc.perform(put("/products/1")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -154,9 +154,9 @@ public class ProductControllerIntTest {
 
     @Test
     public void updateProductWithNotFound() throws Exception {
-        ProductDTO inputProduct = TestUtils.createProductDTO(null, "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
+        ProductDTO inputProduct = TestUtils.createProductDTO("Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
 
-        when(productService.updateProduct(eq(1L), any())).thenThrow(
+        when(productService.updateProduct(eq(1L), any(ProductDTO.class))).thenThrow(
                 new ProductNotFoundException(1L)
         );
 
@@ -168,24 +168,6 @@ public class ProductControllerIntTest {
                 .andReturn().getResponse();
 
         assertThat(response.getContentAsString()).isEqualTo("Could not find product with id : 1");
-    }
-
-    @Test
-    public void updateProductWithIllegalArgument() throws Exception {
-        ProductDTO inputProduct = TestUtils.createProductDTO(2L, "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
-
-        when(productService.updateProduct(eq(1L), any())).thenThrow(
-                new IllegalArgumentException("Product id in path and body do not match")
-        );
-
-        MockHttpServletResponse response = mockMvc.perform(put("/products/1")
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(inputProduct))
-                        .accept(APPLICATION_JSON_VALUE))
-                .andExpect(status().isBadRequest())
-                .andReturn().getResponse();
-
-        assertThat(response.getContentAsString()).isEqualTo("Product id in path and body do not match");
     }
 
     @Test

@@ -9,21 +9,12 @@ import java.math.BigInteger;
  */
 public class ProductDTO {
 
-    Long id;
     String productName;
     String category;
     String imageLink;
     Double unitCost;
     Double unitPrice;
     BigInteger numberSold;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getProductName() {
         return productName;

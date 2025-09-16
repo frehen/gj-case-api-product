@@ -3,6 +3,7 @@ package no.gjensidige.product.controller;
 import no.gjensidige.product.dto.ProductDTO;
 import no.gjensidige.product.entity.Product;
 import no.gjensidige.product.service.ProductService;
+import no.gjensidige.product.utils.TestUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,9 +78,11 @@ public class ProductControllerTest {
 
     @Test
     public void createProduct() {
-        ProductDTO inputProduct = createProductDTO(null);
-        Product p = mm.map(inputProduct,Product.class);
-        p.setId(1L); // The id is set by the repository, not from the ProductDTO
+        ProductDTO inputProduct = TestUtils.createProductDTO(
+                "Helse1", 100.00, 100.00, BigInteger.valueOf(10)
+        );
+        Product p = mm.map(inputProduct, Product.class);
+        p.setId(1L);
 
         when(productService.createProduct(inputProduct)).thenReturn(p);
 
@@ -90,31 +93,22 @@ public class ProductControllerTest {
 
     @Test
     public void updateProduct() {
+        ProductDTO inputProduct = TestUtils.createProductDTO(
+                "Helse1", 100.00, 100.00, BigInteger.valueOf(10)
+        );
         Long productId = 1L;
-        ProductDTO inputProduct = createProductDTO(productId);
-        Product p = mm.map(inputProduct,Product.class);
-        when(productService.updateProduct(productId,inputProduct )).thenReturn(p);
+        Product p = mm.map(inputProduct, Product.class);
+        p.setId(productId);
 
-        Product product = productController.updateProduct(productId,inputProduct);
-        verify(productService).updateProduct(productId,inputProduct);
+        when(productService.updateProduct(productId, inputProduct)).thenReturn(p);
+
+        Product product = productController.updateProduct(productId, inputProduct);
+        verify(productService).updateProduct(productId, inputProduct);
         assertEquals(p, product);
-    }
-
-    private static ProductDTO createProductDTO(Long id) {
-        ProductDTO inputProduct = new ProductDTO();
-        inputProduct.setId(id);
-        inputProduct.setCategory("Helseforsikring");
-        inputProduct.setProductName("Helse1");
-        inputProduct.setUnitPrice(100.00);
-        inputProduct.setNumberSold(BigInteger.valueOf(10));
-        inputProduct.setImageLink("static.gjensidige.com/");
-        inputProduct.setUnitCost(100.00);
-        return inputProduct;
     }
 
     @Test
     public void deleteProduct() {
-
         Product p = new Product();
         p.setId(1L);
 
@@ -125,6 +119,5 @@ public class ProductControllerTest {
         verify(productService).deleteProduct(1L);
 
         assertEquals(1L, product.getId().longValue());
-
     }
 }
