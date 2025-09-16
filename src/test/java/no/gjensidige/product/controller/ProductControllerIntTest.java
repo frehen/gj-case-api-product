@@ -209,15 +209,11 @@ public class ProductControllerIntTest {
 
     @Test
     public void deleteProductWithNotFound() throws Exception {
-        ProductDTO inputProduct = TestUtils.createProductDTO(null, "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
-
         when(productService.deleteProduct(1L)).thenThrow(
                 new ProductNotFoundException(1L)
         );
 
         MockHttpServletResponse response = mockMvc.perform(delete("/products/1")
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(inputProduct))
                         .accept(APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andReturn().getResponse();
