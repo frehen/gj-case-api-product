@@ -58,6 +58,7 @@ public class ReportService {
         r.setTotalCost(totalCost.doubleValue());
         r.setTotalMargin(totalMargin.doubleValue());
         r.setMostSoldProduct(mostSold);
+        r.setLeastSoldProduct(leastSold);
         r.setHighestMarginProduct(highestMarginProduct);
         r.setLowestMarginProduct(lowestMarginProduct);
         return r;

@@ -16,6 +16,7 @@ public class FinancialReport {
     Product highestMarginProduct;
     Product lowestMarginProduct;
     Product mostSoldProduct;
+    Product leastSoldProduct;
     Double totalTurnover;
     Double totalCost;
     Double totalMargin;
@@ -50,6 +51,14 @@ public class FinancialReport {
 
     public void setMostSoldProduct(Product mostSoldProduct) {
         this.mostSoldProduct = mostSoldProduct;
+    }
+
+    public Product getLeastSoldProduct() {
+        return leastSoldProduct;
+    }
+
+    public void setLeastSoldProduct(Product leastSoldProduct) {
+        this.leastSoldProduct = leastSoldProduct;
     }
 
     public Double getTotalTurnover() {

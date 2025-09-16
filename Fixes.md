@@ -68,3 +68,14 @@ Added implementation of controller with test.
 
 Added initial dummy implementation of ReportService with dummy test.
 
+## Fix 6: Dockerized application
+
+Added Dockerfile. Added build instructions to README.md. 
+
+## Fix 7: Added missing leastSoldProduct
+
+Discovered that the leastSoldProduct was missing from the provided FinancialReport implementation.
+
+Added it.
+
+

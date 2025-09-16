@@ -42,6 +42,7 @@ public class ReportServiceTest {
         assertEquals(p, report.getHighestMarginProduct());
         assertEquals(p, report.getLowestMarginProduct());
         assertEquals(p, report.getMostSoldProduct());
+        assertEquals(p, report.getLeastSoldProduct());
         assertEquals((110.0 - 10.0) * 1000 , report.getTotalMargin(), 0.1);
         assertEquals(110.0 * 1000, report.getTotalTurnover(), 0.1);
         assertEquals(10.0 * 1000, report.getTotalCost(), 0.1);
@@ -49,21 +50,25 @@ public class ReportServiceTest {
     }
 
     @Test
-    public void getFinancialReportManyProduct() {
+    public void getFinancialReportManyProducts() {
         Product p1 = createProduct(1L, "Product 1", 10.0, 110.0, BigInteger.valueOf(1000));
-        Product p2 = createProduct(2L, "Product 2", 10.0, 110.0, BigInteger.valueOf(1000));
+        Product p2 = createProduct(2L, "Product 2", 10.0, 110.0, BigInteger.valueOf(999));
         Product p3 = createProduct(3L, "Product 3", 10.0, 110.0, BigInteger.valueOf(1500));
         Product p4 = createProduct(4L, "Product 4", 10.0, 210.0, BigInteger.valueOf(1000));
         Product p5 = createProduct(5L, "Product 5", 10.0, 60.0, BigInteger.valueOf(1000));
         Product p6 = createProduct(6L, "Product 6", 10.0, 110.0, BigInteger.valueOf(1000));
-        double totalMargin = 100 * 1000 + 100 * 1000 + 100 * 1500 + 200 * 1000 + 50 * 1000 + 100 * 1000; // 700000.0
-        double totalTurnover = 110 * 1000 + 110 * 1000 + 110 * 1500 + 210 * 1000 + 60 * 1000 + 110 * 1000; // 765000.
-        double totalCost = 10 * 1000 + 10 * 1000 + 10 * 1500 + 10 * 1000 + 10 * 1000 + 10 * 1000; // 65000.0
+        double totalMargin = 100 * 1000 + 100 * 999 + 100 * 1500 + 200 * 1000 + 50 * 1000 + 100 * 1000;
+        double totalTurnover = 110 * 1000 + 110 * 999 + 110 * 1500 + 210 * 1000 + 60 * 1000 + 110 * 1000;
+        double totalCost = 10 * 1000 + 10 * 999 + 10 * 1500 + 10 * 1000 + 10 * 1000 + 10 * 1000;
+
         when(productRepository.findAll()).thenReturn(Arrays.asList(p1,p2,p3,p4,p5,p6));
+
         FinancialReport report = reportService.getFinancialReport();
+
         assertEquals(p4, report.getHighestMarginProduct());
         assertEquals(p5, report.getLowestMarginProduct());
         assertEquals(p3, report.getMostSoldProduct());
+        assertEquals(p2, report.getLeastSoldProduct());
         assertEquals(totalMargin , report.getTotalMargin(), 0.1);
         assertEquals(totalTurnover, report.getTotalTurnover(), 0.1);
         assertEquals(totalCost, report.getTotalCost(), 0.1);
@@ -81,10 +86,13 @@ public class ReportServiceTest {
         double totalCost = new BigInteger("100000000").add(new BigInteger( "1000000000")).doubleValue();
 
         when(productRepository.findAll()).thenReturn(Arrays.asList(p1,p2));
+
         FinancialReport report = reportService.getFinancialReport();
+
         assertEquals(p2, report.getHighestMarginProduct());
         assertEquals(p1, report.getLowestMarginProduct());
         assertEquals(p2, report.getMostSoldProduct());
+        assertEquals(p1, report.getLeastSoldProduct());
         assertEquals(totalMargin , report.getTotalMargin(), 0.1);
         assertEquals(totalTurnover, report.getTotalTurnover(), 0.1);
         assertEquals(totalCost, report.getTotalCost(), 0.1);
