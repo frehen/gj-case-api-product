@@ -66,7 +66,6 @@ curl -X POST "http://localhost:8080/products/" -H "Content-Type: application/jso
   "productName": "HelseBasis",
   "imageLink": "static.gjensidige.com/",
   "numberSold": 10,
-  "price": 500.0,
   "unitCost": 20.0,
   "unitPrice": 30.0
 }' | jq
@@ -81,7 +80,6 @@ curl -X PUT "http://localhost:8080/products/4" -H "Content-Type: application/jso
   "category": "HelseforsikringNy",
   "imageLink": "static.gjensidige.com/",
   "numberSold": 5001,
-  "price": 501.0,
   "productName": "Helse1Ny",
   "unitCost": 75.5,
   "unitPrice": 100.5

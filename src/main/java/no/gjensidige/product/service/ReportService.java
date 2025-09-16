@@ -51,7 +51,6 @@ public class ReportService {
                 ))
                 .orElse(null);
 
-
         FinancialReport r = new FinancialReport();
         r.setCreated(new Timestamp(Instant.now().toEpochMilli()));
         r.setTotalTurnover(totalRevenue.doubleValue());

@@ -78,4 +78,27 @@ Discovered that the leastSoldProduct was missing from the provided FinancialRepo
 
 Added it.
 
+### Fix 8: Fixed inconsistent naming in ProductDTO
+
+The ProductDTO.java contains inconsistent naming in the setter methods:
+
+```
+    public Double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setPrice(Double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+```
+
+The `case.pdf` document refers to `unit price`, so I changed the setter to `setUnitPrice`.
+
+Note, the original code worked, because Spring maps the `unitPrice` field in the PUT request to the `priceField` 
+field directly using reflection. This overwrites the `price` field in the request.
+
+This fix removes the `price` field from the Swagger model.
+
+I also updated the example request for POST and PUT in the `README.md` file to not use the `price` field.
+
 

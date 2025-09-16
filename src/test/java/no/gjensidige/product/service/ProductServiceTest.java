@@ -135,7 +135,7 @@ public class ProductServiceTest {
         inputProduct.setId(id);
         inputProduct.setCategory("Helseforsikring");
         inputProduct.setProductName("Helse1");
-        inputProduct.setPrice(100.00);
+        inputProduct.setUnitPrice(100.00);
         inputProduct.setNumberSold(BigInteger.valueOf(10));
         inputProduct.setImageLink("static.gjensidige.com/");
         inputProduct.setUnitCost(100.00);
@@ -188,7 +188,7 @@ public class ProductServiceTest {
         productDTO.setCategory("Hardware");
         productDTO.setProductName("Seagate Baracuda 500GB");
         productDTO.setNumberSold(BigInteger.valueOf(200));
-        productDTO.setPrice(55.50);
+        productDTO.setUnitPrice(55.50);
 
         when(modelMapper.map(productDTO,Product.class)).thenReturn(mm.map(productDTO,Product.class));
         Product product = productService.convertToEntity(productDTO);

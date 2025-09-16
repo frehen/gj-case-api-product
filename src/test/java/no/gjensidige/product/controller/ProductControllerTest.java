@@ -98,7 +98,7 @@ public class ProductControllerTest {
         inputProduct.setId(id);
         inputProduct.setCategory("Helseforsikring");
         inputProduct.setProductName("Helse1");
-        inputProduct.setPrice(100.00);
+        inputProduct.setUnitPrice(100.00);
         inputProduct.setNumberSold(BigInteger.valueOf(10));
         inputProduct.setImageLink("static.gjensidige.com/");
         inputProduct.setUnitCost(100.00);
